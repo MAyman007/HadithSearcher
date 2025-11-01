@@ -136,8 +136,9 @@ class _AboutViewState extends State<AboutView> {
                           ),
                           child: IconButton(
                             onPressed: () async {
-                              await Share.shareWithResult(
-                                  "https://play.google.com/store/apps/details?id=com.moaymandev.hadithsearcher");
+                              await SharePlus.instance.share(ShareParams(
+                                  text:
+                                      "https://play.google.com/store/apps/details?id=com.moaymandev.hadithsearcher"));
                             },
                             icon: const Icon(Icons.share_rounded),
                             tooltip: 'مشاركة',

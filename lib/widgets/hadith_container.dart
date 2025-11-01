@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadithsearcher/widgets/show_msg_dialog.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hadithsearcher/db/database.dart';
@@ -71,14 +71,7 @@ class _HadithContainerState extends State<HadithContainer>
     String hadithText =
         '${hadith['hadith']}\n\nالراوي: ${hadith['rawi']}\nالمحدث: ${hadith['mohdith']}\nالمصدر: ${hadith['book']}\nالصفحة أو الرقم: ${hadith['numberOrPage']}\nخلاصة حكم المحدث: ${hadith['grade']}';
 
-    final result = await Share.shareWithResult(hadithText);
-
-    if (result.status == ShareResultStatus.success) {
-      Fluttertoast.showToast(
-        msg: 'تم المشاركة',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
+    await SharePlus.instance.share(ShareParams(text: hadithText));
   }
 
   @override
@@ -129,10 +122,10 @@ class _HadithContainerState extends State<HadithContainer>
                           jsonResponse['data']['sharhMetadata']['sharh'],
                         );
                       } else {
-                        Fluttertoast.showToast(
-                          msg: 'فشل البحث عن شرح',
-                          toastLength: Toast.LENGTH_SHORT,
-                        );
+                        // Fluttertoast.showToast(
+                        //   msg: 'فشل البحث عن شرح',
+                        //   toastLength: Toast.LENGTH_SHORT,
+                        // );
                       }
                     } on http.ClientException {
                       return await showMsgDialog(
@@ -237,20 +230,20 @@ class _HadithContainerState extends State<HadithContainer>
                       if (row['hadithid'] == widget.hadithId) {
                         await sqlDb.deleteData(
                             "DELETE FROM 'favourites' WHERE id = ${row['id']}");
-                        Fluttertoast.showToast(
-                          msg: 'تم إزالة الحديث من المفضلة',
-                          toastLength: Toast.LENGTH_SHORT,
-                        );
+                        // Fluttertoast.showToast(
+                        //   msg: 'تم إزالة الحديث من المفضلة',
+                        //   toastLength: Toast.LENGTH_SHORT,
+                        // );
                         _onFavButtonPressed(widget.index);
                         return;
                       }
                     }
                     await sqlDb.insertData(
                         "INSERT INTO 'favourites' ('hadithtext', 'hadithinfo', 'hadithid') VALUES ('${widget.hadithText}', '${widget.hadithInfo}', '${widget.hadithId}')");
-                    Fluttertoast.showToast(
-                      msg: 'تم إضافة الحديث إلى المفضلة',
-                      toastLength: Toast.LENGTH_SHORT,
-                    );
+                    // Fluttertoast.showToast(
+                    //   msg: 'تم إضافة الحديث إلى المفضلة',
+                    //   toastLength: Toast.LENGTH_SHORT,
+                    // );
                     _onFavButtonPressed(widget.index);
                   },
                   icon: Icon(

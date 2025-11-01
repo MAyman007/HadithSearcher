@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadithsearcher/views/similar_hadith_view.dart';
 import 'package:hadithsearcher/widgets/show_msg_dialog.dart';
 import 'package:hadithsearcher/widgets/show_navigation_drawer.dart';
@@ -81,14 +81,7 @@ class _FavouritesViewState extends State<FavouritesView> {
   Future shareHadith(int index, Map hadith) async {
     String hadithText = '${hadith['hadithtext']}\n\n${hadith['hadithinfo']}';
 
-    final result = await Share.shareWithResult(hadithText);
-
-    if (result.status == ShareResultStatus.success) {
-      Fluttertoast.showToast(
-        msg: 'تم المشاركة',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
+    await SharePlus.instance.share(ShareParams(text: hadithText));
   }
 
   List<Map> pairedValues = [];
@@ -311,11 +304,11 @@ class _FavouritesViewState extends State<FavouritesView> {
                                                           ['sharh'],
                                                     );
                                                   } else {
-                                                    Fluttertoast.showToast(
-                                                      msg: 'فشل البحث عن شرح',
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                    );
+                                                    // Fluttertoast.showToast(
+                                                    //   msg: 'فشل البحث عن شرح',
+                                                    //   toastLength:
+                                                    //       Toast.LENGTH_SHORT,
+                                                    // );
                                                   }
                                                 } on http.ClientException {
                                                   return await showMsgDialog(
@@ -435,12 +428,12 @@ class _FavouritesViewState extends State<FavouritesView> {
                                                       hadithId) {
                                                     await sqlDb.deleteData(
                                                         "DELETE FROM 'favourites' WHERE id = ${row['id']}");
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          'تم إزالة الحديث من المفضلة',
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                    );
+                                                    // Fluttertoast.showToast(
+                                                    //   msg:
+                                                    //       'تم إزالة الحديث من المفضلة',
+                                                    //   toastLength:
+                                                    //       Toast.LENGTH_SHORT,
+                                                    // );
                                                     setState(() {
                                                       pairedValues
                                                           .removeAt(index);

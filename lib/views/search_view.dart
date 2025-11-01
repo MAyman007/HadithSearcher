@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadithsearcher/db/database.dart';
 import 'package:hadithsearcher/views/similar_hadith_view.dart';
 import 'package:http/http.dart' as http;
@@ -198,14 +198,7 @@ class _SearchViewState extends State<SearchView> {
     String hadithText =
         '${hadith['hadith']}\n\nالراوي: ${hadith['rawi']}\nالمحدث: ${hadith['mohdith']}\nالمصدر: ${hadith['book']}\nالصفحة أو الرقم: ${hadith['numberOrPage']}\nخلاصة حكم المحدث: ${hadith['grade']}';
 
-    final result = await Share.shareWithResult(hadithText);
-
-    if (result.status == ShareResultStatus.success) {
-      Fluttertoast.showToast(
-        msg: 'تم المشاركة',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
+    await SharePlus.instance.share(ShareParams(text: hadithText));
   }
 
   @override
@@ -503,10 +496,10 @@ class _SearchViewState extends State<SearchView> {
         await prefs.setString('searchMohdith', searchMohdithSelectedValue);
         await prefs.setString('searchBook', searchBookSelectedValue);
         await prefs.setString('searchExcludedWords', searchExcludedWords);
-        Fluttertoast.showToast(
-          msg: 'تم الحفظ',
-          toastLength: Toast.LENGTH_SHORT,
-        );
+        // Fluttertoast.showToast(
+        //   msg: 'تم الحفظ',
+        //   toastLength: Toast.LENGTH_SHORT,
+        // );
       }
     }
   }
@@ -1237,11 +1230,11 @@ class _SearchViewState extends State<SearchView> {
                                                             ['sharh'],
                                                       );
                                                     } else {
-                                                      Fluttertoast.showToast(
-                                                        msg: 'فشل البحث عن شرح',
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                      );
+                                                      // Fluttertoast.showToast(
+                                                      //   msg: 'فشل البحث عن شرح',
+                                                      //   toastLength:
+                                                      //       Toast.LENGTH_SHORT,
+                                                      // );
                                                     }
                                                   } on http.ClientException {
                                                     return await showMsgDialog(
@@ -1362,12 +1355,12 @@ class _SearchViewState extends State<SearchView> {
                                                         hadithId) {
                                                       await sqlDb.deleteData(
                                                           "DELETE FROM 'favourites' WHERE id = ${row['id']}");
-                                                      Fluttertoast.showToast(
-                                                        msg:
-                                                            'تم إزالة الحديث من المفضلة',
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                      );
+                                                      // Fluttertoast.showToast(
+                                                      //   msg:
+                                                      //       'تم إزالة الحديث من المفضلة',
+                                                      //   toastLength:
+                                                      //       Toast.LENGTH_SHORT,
+                                                      // );
                                                       setState(() {
                                                         isFavButtonPressedList[
                                                             index] = false;
@@ -1377,12 +1370,12 @@ class _SearchViewState extends State<SearchView> {
                                                   }
                                                   await sqlDb.insertData(
                                                       "INSERT INTO 'favourites' ('hadithtext', 'hadithinfo', 'hadithid') VALUES ('${hadithText}', '${hadithInfo}', '${hadithId}')");
-                                                  Fluttertoast.showToast(
-                                                    msg:
-                                                        'تم إضافة الحديث إلى المفضلة',
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                  );
+                                                  // Fluttertoast.showToast(
+                                                  //   msg:
+                                                  //       'تم إضافة الحديث إلى المفضلة',
+                                                  //   toastLength:
+                                                  //       Toast.LENGTH_SHORT,
+                                                  // );
                                                   setState(() {
                                                     isFavButtonPressedList[
                                                         index] = true;
