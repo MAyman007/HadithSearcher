@@ -49,7 +49,7 @@ class _AboutViewState extends State<AboutView> {
                   height: 5,
                 ),
                 const Text(
-                  'version 1.1.3',
+                  'version 1.1.4',
                   style: TextStyle(fontSize: 18),
                 ),
                 const SizedBox(
